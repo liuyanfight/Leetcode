@@ -72,9 +72,13 @@ class Solution {
 public:
     bool isValid(string s) {
         vector<char> quq{};
-        quq.resize(s.size());
         for (size_t i = 0; i < s.size(); i++)
         {
+            if (quq.empty())
+            {
+                quq.push_back(s[i]);
+                continue;
+            }
             if (quq.back() != 0)
             {
                 if (s[i] == ')' and quq.back() == '(')
@@ -89,13 +93,18 @@ public:
                 {
                     quq.pop_back();
                 }
+                else
+                {
+                    quq.push_back(s[i]);
+                }
+                
             }
             else
             {
                 quq.push_back(s[i]);
             }
         }
-        if (quq.size() > 0)
+        if (not quq.empty())
         {
             return false;
         }
@@ -106,8 +115,8 @@ public:
 // int main()
 // {
 //     Solution so;
-//     vector<string> s = {"()", "()[]{}","(]", "([)]","{[]}","]"};
-//     vector<bool> result = {true, true, false, false, true,false};
+//     vector<string> s = {"()", "()[]{}","(]", "([)]","{[]}","]","([)"};
+//     vector<bool> result = {true, true, false, false, true,false,false};
 //     for(int i = 0; i < s.size(); i++)
 //     {
 //         if (result[i] != so.isValid(s[i]))
